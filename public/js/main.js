@@ -55,6 +55,7 @@ window.onload = function() {
 
         points = 0;
         isStart = true;
+        draw();
     };
 
     function randomizeApple() {
@@ -196,6 +197,19 @@ window.onload = function() {
         }
         draw();
     });
+
+    document.getElementById('updateGame').onclick = () => {
+        let inputX = document.getElementById('numberInputX');
+        let inputY = document.getElementById('numberInputY');
+        gameWidth = parseInt(inputX.value);
+        gameHeight = parseInt(inputY.value);
+
+        let canvas = document.getElementById('gameCanvas');
+        debugger;
+        canvas.width = gameWidth;
+        canvas.height = gameHeight;
+        resetGame();
+    };
 
     setInterval(function() {
         if(!isStart) {
