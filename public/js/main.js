@@ -16,6 +16,9 @@ let appleY = 200;
 let points = 0;
 let highScore = 0;
 
+let xDown = null;                                                        
+let yDown = null;                                                        
+
 window.onload = function() {
     let gameCanvas = document.getElementById('gameCanvas');
     let gc = gameCanvas.getContext('2d');
@@ -102,6 +105,56 @@ window.onload = function() {
         }
     };
 
+    // TODO: Refactor this out later
+    function handleTouchStart(evt) {                                         
+        xDown = evt.touches[0].clientX;                                      
+        yDown = evt.touches[0].clientY;                                      
+    };                                                
+    
+    function handleTouchMove(evt) {
+        if ( ! xDown || ! yDown ) {
+            return;
+        }
+    
+        var xUp = evt.touches[0].clientX;                                    
+        var yUp = evt.touches[0].clientY;
+    
+        var xDiff = xDown - xUp;
+        var yDiff = yDown - yUp;
+    
+        if ( Math.abs( xDiff ) > Math.abs( yDiff ) ) {/*most significant*/
+            if ( xDiff > 0 ) {
+                /* left swipe */ 
+                pxv = -1;
+                pyv = 0;
+            } else {
+                /* right swipe */
+                pxv = 1;
+                pyv = 0;
+            }                       
+        } else {
+            if ( yDiff > 0 ) {
+                /* up swipe */ 
+                pxv = 0;
+                pyv = -1;
+            } else { 
+                /* down swipe */
+                pxv = 0;
+                pyv = 1;
+            }                                                                 
+        }
+        draw();
+
+        /* reset values */
+        xDown = null;
+        yDown = null;                                             
+    };
+
+    // Mobile event listeners
+    document.addEventListener('touchstart', handleTouchStart, false);        
+    document.addEventListener('touchmove', handleTouchMove, false);
+
+    // Desktop event listeners
     document.addEventListener('keydown', function(event) {
         if(event.keyCode === 37) {
             pxv = -1;
@@ -129,3 +182,4 @@ window.onload = function() {
         draw();
     }, 1000/15);
 };
+
