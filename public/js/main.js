@@ -3,10 +3,11 @@
 let gameWidth = 500;
 let gameHeight = 500;
 
-let px = 0;
-let py = 0;
 let pw = 20;
 let ph = 20;
+
+let px = (((gameWidth/pw) - 1)/2) * pw;
+let py = (((gameHeight/ph) - 1)/2) * ph;
 let pxv = 1;
 let pyv = 0;
 let snake = [{positionX: px, positionY: py}, {positionX: px, positionY: py}, {positionX: px, positionY: py}, {positionX: px, positionY: py}];
