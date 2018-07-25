@@ -60,6 +60,14 @@ window.onload = function() {
     function randomizeApple() {
         appleX = Math.floor(Math.random() * (gameWidth/pw)) * pw;
         appleY = Math.floor(Math.random() * (gameHeight/ph)) * ph;
+
+        // TODO: rafactor this. There is shared collision logic here and below when we are detecting points and the game over case.
+        snake.forEach((snakeBody) => {
+            if(snakeBody.positionX === appleX &&
+                snakeBody.positionY === appleY) {
+                randomizeApple();
+            }
+        }); 
     }
 
     function draw() {
