@@ -6,9 +6,17 @@ let gameHeight = 500;
 let pw = 20;
 let ph = 20;
 
-let px = (((gameWidth/pw) - 1)/2) * pw;
-let py = (((gameHeight/ph) - 1)/2) * ph;
-let pxv = 1;
+function gameStartX() {
+    return (((gameWidth/pw) - 1)/2) * pw;
+}
+
+function gameStartY() {
+    return (((gameHeight/ph) - 1)/2) * ph;
+}
+
+let px = gameStartX();
+let py = gameStartY();
+let pxv = 0;
 let pyv = 0;
 let snake = [{positionX: px, positionY: py}, {positionX: px, positionY: py}, {positionX: px, positionY: py}, {positionX: px, positionY: py}];
 let snakeML = 4;
@@ -18,7 +26,9 @@ let points = 0;
 let highScore = 0;
 
 let xDown = null;                                                        
-let yDown = null;                                                        
+let yDown = null;   
+
+let isStart = true;
 
 window.onload = function() {
     let gameCanvas = document.getElementById('gameCanvas');
@@ -32,9 +42,9 @@ window.onload = function() {
     let highScoreElement = document.getElementById('highScore');
 
     function resetGame() {
-        px = 0;
-        py = 0;
-        pxv = 1;
+        px = gameStartX();
+        py = gameStartY();
+        pxv = 0;
         pyv = 0;
         snake.fill({positionX: px, positionY: py}, 0);
         snakeML = 4;
@@ -44,6 +54,7 @@ window.onload = function() {
         }
 
         points = 0;
+        isStart = true;
     };
 
     function randomizeApple() {
@@ -113,6 +124,7 @@ window.onload = function() {
     };                                                
     
     function handleTouchMove(evt) {
+        isStart = false;
         if ( ! xDown || ! yDown ) {
             return;
         }
@@ -148,7 +160,7 @@ window.onload = function() {
 
         /* reset values */
         xDown = null;
-        yDown = null;                                             
+        yDown = null;                          
     };
 
     // Mobile event listeners
@@ -157,6 +169,7 @@ window.onload = function() {
 
     // Desktop event listeners
     document.addEventListener('keydown', function(event) {
+        isStart = false;
         if(event.keyCode === 37) {
             pxv = -1;
             pyv = 0;
@@ -177,10 +190,12 @@ window.onload = function() {
     });
 
     setInterval(function() {
-        move();
-        collision();
-        cleanUp();
-        draw();
+        if(!isStart) {
+            move();
+            collision();
+            cleanUp();
+            draw();
+        }
     }, 1000/15);
 };
 
