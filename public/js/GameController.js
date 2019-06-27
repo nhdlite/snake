@@ -25,8 +25,8 @@ class GameController {
         const xUp = event.touches[0].clientX;                                    
         const yUp = event.touches[0].clientY;
     
-        const xDiff = xDown - xUp;
-        const yDiff = yDown - yUp;
+        const xDiff = this.xDown - xUp;
+        const yDiff = this.yDown - yUp;
     
         // Determine in what direction the user swiped the most
         if ( Math.abs( xDiff ) > Math.abs( yDiff ) ) {
