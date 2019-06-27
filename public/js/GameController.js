@@ -12,12 +12,12 @@ class GameController {
     }
 
     handleTouchStart(evt) {                                         
-        xDown = evt.touches[0].clientX;                                      
-        yDown = evt.touches[0].clientY;                                      
+        this.xDown = evt.touches[0].clientX;                                      
+        this.yDown = evt.touches[0].clientY;                                      
     }
 
     handleTouchMove(event) {
-        ths.game.isStart = false;
+        this.game.isStart = false;
         if ( !this.xDown || !this.yDown ) {
             return;
         }
